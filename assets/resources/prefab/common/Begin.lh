@@ -1,0 +1,83 @@
+{
+  "_$ver": 1,
+  "_$id": "mu6olastlk",
+  "_$type": "Box",
+  "name": "Begin",
+  "width": 400,
+  "height": 400,
+  "mouseEnabled": true,
+  "_$comp": [
+    {
+      "_$type": "679b8a7e-de4e-4a96-956e-f5ef5dc28122",
+      "scriptPath": "../src/Begin.ts",
+      "easyBtn": {
+        "_$ref": "xvqx2bc1"
+      },
+      "diffBtn": {
+        "_$ref": "15rekrig"
+      },
+      "coins": {
+        "_$ref": "8polq313"
+      }
+    }
+  ],
+  "_$child": [
+    {
+      "_$id": "6fw4avbo",
+      "_$type": "Sprite",
+      "name": "bg",
+      "width": 400,
+      "height": 400,
+      "texture": {
+        "_$uuid": "c7f9e1bd-bee7-4c41-8bd0-ac40d389fa5a",
+        "_$type": "Texture"
+      },
+      "mouseEnabled": true,
+      "_$child": [
+        {
+          "_$id": "xvqx2bc1",
+          "_$type": "Button",
+          "name": "easyBtn",
+          "x": 140,
+          "y": 148,
+          "width": 120,
+          "height": 40,
+          "mouseEnabled": true,
+          "stateNum": 1,
+          "skin": "res://d4cfd6a8-0d0a-475b-ac93-d85eaa646936",
+          "label": "简单",
+          "labelSize": 20
+        },
+        {
+          "_$id": "15rekrig",
+          "_$type": "Button",
+          "name": "diffBtn",
+          "x": 143,
+          "y": 262,
+          "width": 120,
+          "height": 40,
+          "mouseEnabled": true,
+          "stateNum": 1,
+          "skin": "res://d4cfd6a8-0d0a-475b-ac93-d85eaa646936",
+          "label": "困难",
+          "labelSize": 20
+        },
+        {
+          "_$id": "8polq313",
+          "_$type": "Label",
+          "name": "Label",
+          "x": 247,
+          "y": 41,
+          "width": 120,
+          "height": 28,
+          "text": "金币：0",
+          "fontSize": 20,
+          "color": "rgba(0, 0, 0, 1)",
+          "bold": true,
+          "leading": 0,
+          "padding": "0,0,0,0"
+        }
+      ]
+    }
+  ]
+}

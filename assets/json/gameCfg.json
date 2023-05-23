@@ -1,0 +1,86 @@
+{
+    "level1": {
+        "1": {
+            "times": 7200,
+            "addscore": 10,
+            "boxNum": 16,
+            "boundX": 4,
+            "boundY": 4,
+            "size": 60,
+            "boom": 50,
+            "randomNum": 4
+        },
+        "2": {
+            "times": 7200,
+            "addscore": 10,
+            "boxNum": 36,
+            "boundX": 6,
+            "boundY": 6,
+            "size": 60,
+            "boom": 100,
+            "randomNum": 6
+        },
+        "3": {
+            "times": 7200,
+            "addscore": 10,
+            "boxNum": 64,
+            "boundX": 8,
+            "boundY": 8,
+            "size": 60,
+            "boom": 150,
+            "randomNum": 8
+        },
+        "4": {
+            "times": 7200,
+            "addscore": 10,
+            "boxNum": 100,
+            "boundX": 10,
+            "boundY": 10,
+            "size": 60,
+            "boom": 50,
+            "randomNum": 8
+        },
+        "5": {
+            "times": 7200,
+            "addscore": 10,
+            "boxNum": 144,
+            "boundX": 12,
+            "boundY": 12,
+            "size": 60,
+            "boom": 100,
+            "randomNum": 10
+        }
+    },
+    "level2": {
+        "1": {
+            "times": 7200,
+            "addscore": 15,
+            "boxNum": 64,
+            "boundX": 8,
+            "boundY": 8,
+            "size": 60,
+            "boom": 200,
+            "randomNum": 8
+        },
+        "2": {
+            "times": 7200,
+            "addscore": 20,
+            "boxNum": 100,
+            "boundX": 10,
+            "boundY": 10,
+            "size": 60,
+            "boom": 250,
+            "randomNum": 10
+        },
+        "3": {
+            "times": 7200,
+            "addscore": 25,
+            "boxNum": 144,
+            "boundX": 12,
+            "boundY": 12,
+            "size": 60,
+            "boom": 300,
+            "randomNum": 12
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+  "_$ver": 1,
+  "_$id": "tofutp4w",
+  "_$type": "Button",
+  "name": "game_btn_fruit",
+  "width": 60,
+  "height": 60,
+  "mouseEnabled": true,
+  "stateNum": 1,
+  "skin": "",
+  "label": "",
+  "labelSize": 20,
+  "_$comp": [
+    {
+      "_$type": "71cd39b1-dada-4ef6-8746-3ac17095370b",
+      "scriptPath": "../src/Fruit.ts"
+    }
+  ]
+}

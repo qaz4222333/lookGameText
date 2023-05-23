@@ -1,0 +1,255 @@
+{
+  "_$ver": 1,
+  "_$id": "umi22tc7az",
+  "_$type": "Box",
+  "name": "scene_game",
+  "width": 720,
+  "height": 1280,
+  "mouseEnabled": true,
+  "_$comp": [
+    {
+      "_$type": "dd4ad674-c174-449e-9151-20d14f4eefad",
+      "scriptPath": "../src/Game.ts",
+      "findBtn": {
+        "_$ref": "9yzmta0n"
+      },
+      "boomBtn": {
+        "_$ref": "zl16ysou"
+      },
+      "backBtn": {
+        "_$ref": "g75s2fx9"
+      },
+      "grade": {
+        "_$ref": "28mppt57"
+      },
+      "coins": {
+        "_$ref": "ajz8jkz8"
+      },
+      "score": {
+        "_$ref": "1k3nihqk"
+      },
+      "times": {
+        "_$ref": "3kq65hk4"
+      },
+      "fruitGroup": {
+        "_$ref": "ofsfprer"
+      },
+      "findTimes": {
+        "_$ref": "hb6ujilu"
+      },
+      "boomCum": {
+        "_$ref": "l1m2nvwg"
+      },
+      "timeBar": {
+        "_$ref": "o2htivy2"
+      }
+    }
+  ],
+  "_$child": [
+    {
+      "_$id": "8pt4igvo",
+      "_$type": "Sprite",
+      "name": "bg",
+      "width": 720,
+      "height": 1280,
+      "texture": {
+        "_$uuid": "01fa340b-276c-40c7-ae84-46c0c1471e4d",
+        "_$type": "Texture"
+      },
+      "mouseEnabled": true,
+      "_$child": [
+        {
+          "_$id": "0zgfm3bd",
+          "_$type": "Box",
+          "name": "uiBox",
+          "width": 720,
+          "height": 400,
+          "mouseEnabled": true,
+          "_$child": [
+            {
+              "_$id": "g75s2fx9",
+              "_$type": "Button",
+              "name": "backBtn",
+              "x": 42,
+              "y": 19,
+              "width": 68,
+              "height": 67,
+              "mouseEnabled": true,
+              "left": 42,
+              "top": 19,
+              "stateNum": 1,
+              "skin": "res://c7a60d3f-8c51-4d8a-b202-98e613a29315",
+              "label": "",
+              "labelSize": 20
+            },
+            {
+              "_$id": "9yzmta0n",
+              "_$type": "Button",
+              "name": "findBtn",
+              "x": 84,
+              "y": 269,
+              "width": 68,
+              "height": 67,
+              "mouseEnabled": true,
+              "left": 84,
+              "centerX": -242,
+              "stateNum": 1,
+              "skin": "res://b32ff4d1-9bc8-466a-a4fd-165ce55b6e4d",
+              "label": "",
+              "labelSize": 30,
+              "labelBold": true,
+              "labelColors": "#000000,#32cc6b,#ff0000,#c0c0c0",
+              "_$child": [
+                {
+                  "_$id": "hb6ujilu",
+                  "_$type": "Label",
+                  "name": "findNum",
+                  "x": 75,
+                  "y": 15,
+                  "width": 120,
+                  "height": 67,
+                  "text": "次数：3\n",
+                  "fontSize": 32,
+                  "color": "rgba(5, 5, 5, 1)",
+                  "bold": true,
+                  "leading": 0,
+                  "padding": "0,0,0,0"
+                }
+              ]
+            },
+            {
+              "_$id": "zl16ysou",
+              "_$type": "Button",
+              "name": "boomBtn",
+              "x": 445,
+              "y": 262,
+              "width": 68,
+              "height": 67,
+              "mouseEnabled": true,
+              "left": 445,
+              "centerX": 119,
+              "stateNum": 1,
+              "skin": "res://e2ca79e9-4da2-46fc-9b1f-dbd8782cf9a0",
+              "label": "",
+              "labelSize": 30,
+              "labelBold": true,
+              "labelColors": "#010101,#32cc6b,#ff0000,#c0c0c0",
+              "_$child": [
+                {
+                  "_$id": "l1m2nvwg",
+                  "_$type": "Label",
+                  "name": "boomNum",
+                  "x": 66,
+                  "y": 21.00000000000003,
+                  "width": 120,
+                  "height": 67,
+                  "text": "金币：100",
+                  "fontSize": 32,
+                  "color": "rgba(5, 5, 5, 1)",
+                  "bold": true,
+                  "leading": 0,
+                  "padding": "0,0,0,0"
+                }
+              ]
+            },
+            {
+              "_$id": "ajz8jkz8",
+              "_$type": "Label",
+              "name": "coins",
+              "x": 93,
+              "y": 166,
+              "width": 167,
+              "height": 39,
+              "right": 460,
+              "top": 166,
+              "text": "金币：0\n",
+              "fontSize": 36,
+              "color": "rgba(0, 0, 0, 1)",
+              "bold": true,
+              "leading": 0,
+              "padding": "0,0,0,0"
+            },
+            {
+              "_$id": "1k3nihqk",
+              "_$type": "Label",
+              "name": "scores",
+              "x": 422,
+              "y": 166,
+              "width": 256,
+              "height": 68,
+              "right": 42,
+              "top": 166,
+              "text": "分数：0\n",
+              "fontSize": 36,
+              "color": "rgba(0, 0, 0, 1)",
+              "bold": true,
+              "leading": 0,
+              "padding": "0,0,0,0"
+            },
+            {
+              "_$id": "3kq65hk4",
+              "_$type": "Label",
+              "name": "times",
+              "x": 374,
+              "y": 95,
+              "width": 120,
+              "height": 28,
+              "anchorX": 0.5,
+              "anchorY": 0.5,
+              "centerX": 14,
+              "text": "00:00",
+              "fontSize": 36,
+              "color": "rgba(0, 0, 0, 1)",
+              "bold": true,
+              "leading": 0,
+              "padding": "0,0,0,0"
+            },
+            {
+              "_$id": "28mppt57",
+              "_$type": "Label",
+              "name": "grade",
+              "x": 282,
+              "y": 28,
+              "width": 160,
+              "height": 47,
+              "left": 282,
+              "top": 28,
+              "text": "第1关",
+              "fontSize": 30,
+              "color": "rgba(0, 0, 0, 1)",
+              "bold": true,
+              "align": "center",
+              "leading": 0,
+              "padding": "0,0,0,0"
+            },
+            {
+              "_$id": "o2htivy2",
+              "_$type": "ProgressBar",
+              "name": "ProgressBar",
+              "x": 83,
+              "y": 126,
+              "width": 560,
+              "height": 30,
+              "skin": "res://ae3de75e-ee9f-478d-9f8b-ede75a4fc296",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "_$id": "ofsfprer",
+          "_$type": "Box",
+          "name": "fruitGroup",
+          "x": 362,
+          "y": 723,
+          "width": 720,
+          "height": 720,
+          "anchorX": 0.5,
+          "anchorY": 0.5,
+          "mouseEnabled": true,
+          "centerX": 2,
+          "centerY": 83
+        }
+      ]
+    }
+  ]
+}

@@ -1,53 +1,60 @@
+import { Game } from "./Game";
+
 const { regClass, property } = Laya;
 
 @regClass()
-export class Script extends Laya.Script {
-    //declare owner : Laya.Sprite3D;
-
-    @property(String)
-    public text: string = "";
+export class Over extends Laya.Script {
+    @property({ type: Laya.Button })
+    private backBtn: Laya.Button;
+    @property({ type: Laya.Label })
+    private endLabel: Laya.Label;
+    private localCoin: number = 0;
 
     constructor() {
         super();
     }
 
-    /**
-     * 组件被激活后执行，此时所有节点和组件均已创建完毕，此方法只执行一次
-     */
-    //onAwake(): void {}
+    onAwake(): void {
 
-    /**
-     * 组件被启用后执行，例如节点被添加到舞台后
-     */
-    //onEnable(): void {}
+    }
 
-    /**
-     * 组件被禁用时执行，例如从节点从舞台移除后
-     */
-    //onDisable(): void {}
+    onEnable(): void {
+        this.backBtn.on(Laya.Event.CLICK, this, () => {
+            this.backBegin();
+        })
+    }
 
-    /**
-     * 第一次执行update之前执行，只会执行一次
-     */
-    //onStart(): void {}
+    onStart() {
 
-    /**
-     * 手动调用节点销毁时执行
-     */
-    //onDestroy(): void {
+    }
 
-    /**
-     * 每帧更新时执行，尽量不要在这里写大循环逻辑或者使用getComponent方法
-     */
-    //onUpdate(): void {}
+    //coins（分数、金币），type 是否通关
+    showEndUI(coins: number = 0, type: boolean = false) {
+        let str1 = "恭喜您通过啦，您的分数是：" + coins + "\n\n" + "您获得的奖励是：" + coins + "金币";
+        let str2 = "真遗憾，您没有通关，继续努力吧";
+        let width = 800;
+        let str = type ? str1 : str2;
+        this.endLabel.text = str;
+        this.endLabel.wordWrap = true;
+        this.endLabel.x = this.endLabel.width - width >> 1;
+        if (type) this.storageCoin(coins);
+    }
 
-    /**
-     * 每帧更新时执行，在update之后执行，尽量不要在这里写大循环逻辑或者使用getComponent方法
-     */
-    //onLateUpdate(): void {}
+    //存储金币
+    storageCoin(coins: number) {
+        this.localCoin = Number(Laya.LocalStorage.getItem("weiqing"));
+        if (this.localCoin == null || this.localCoin.toString() == '') this.localCoin = 0;
+        this.localCoin += coins;
+        Laya.LocalStorage.setItem("weiqing", this.localCoin.toString());
+    }
 
-    /**
-     * 鼠标点击后执行。与交互相关的还有onMouseDown等十多个函数，具体请参阅文档。
-     */
-    //onMouseClick(): void {}
+    //返回主界面
+    backBegin() {
+        Laya.loader.load("resources/prefab/begin/begin_scene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
+            let beginBox = res.create();
+            let owner: Laya.Sprite | Laya.Sprite3D = this.owner;
+            owner.parent.addChild(beginBox);
+            this.owner.destroy();
+        });
+    }
 }

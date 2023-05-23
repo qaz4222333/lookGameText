@@ -1,0 +1,46 @@
+{
+  "_$ver": 1,
+  "_$id": "lr5v2ppd",
+  "_$type": "Button",
+  "name": "tips_prefab",
+  "width": 720,
+  "height": 1280,
+  "mouseEnabled": true,
+  "stateNum": 1,
+  "skin": "res://b86ab1e4-4348-47f0-96e7-771387714bfc",
+  "sizeGrid": "7,51,13,51,0",
+  "label": "",
+  "labelSize": 20,
+  "_$child": [
+    {
+      "_$id": "dlq8dltv",
+      "_$type": "Label",
+      "name": "title",
+      "x": -4,
+      "y": 80,
+      "width": 720,
+      "height": 196,
+      "text": "游戏规则",
+      "fontSize": 72,
+      "color": "rgba(0, 0, 0, 1)",
+      "bold": true,
+      "align": "center",
+      "leading": 0,
+      "padding": "0,0,0,0"
+    },
+    {
+      "_$id": "e5flg2ic",
+      "_$type": "Label",
+      "name": "Label",
+      "y": 468,
+      "width": 720,
+      "height": 600,
+      "text": "鼠标分别点击相同的两个图\n片，如果连接这两个图片的\n直线不超过三条，并且不能\n碰到其他图片，则消除图片\n，直到图片全部消除，有时\n限制间，有提示功能（每局\n三次），有炸弹功能，但是\n需要使用金币哦~金币通关\n则可获得\n",
+      "fontSize": 60,
+      "color": "rgba(0, 0, 0, 1)",
+      "bold": true,
+      "leading": 0,
+      "padding": "0,0,0,0"
+    }
+  ]
+}

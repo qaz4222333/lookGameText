@@ -1,0 +1,59 @@
+{
+    "level1": {
+        "1": {
+            "times": 18000,
+            "boxNum": 36,
+            "boundX": 6,
+            "boundY": 6,
+            "size": 40,
+            "boom": 50,
+            "randomNum": 6
+        },
+        "2": {
+            "times": 18000,
+            "boxNum": 36,
+            "boundX": 6,
+            "boundY": 6,
+            "size": 40,
+            "boom": 100
+        },
+        "3": {
+            "times": 18000,
+            "boxNum": 64,
+            "boundX": 8,
+            "boundY": 8,
+            "size": 40,
+            "boom": 150,
+            "randomNum": 7
+        }
+    },
+    "level2": {
+        "1": {
+            "times": 7200,
+            "boxNum": 64,
+            "boundX": 8,
+            "boundY": 8,
+            "size": 40,
+            "boom": 200,
+            "randomNum": 8
+        },
+        "2": {
+            "times": 7200,
+            "boxNum": 100,
+            "boundX": 10,
+            "boundY": 10,
+            "size": 40,
+            "boom": 250,
+            "randomNum": 9
+        },
+        "3": {
+            "times": 7200,
+            "boxNum": 144,
+            "boundX": 12,
+            "boundY": 12,
+            "size": 40,
+            "boom": 300,
+            "randomNum": 10
+        }
+    }
+}

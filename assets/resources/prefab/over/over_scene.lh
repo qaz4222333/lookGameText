@@ -1,0 +1,89 @@
+{
+  "_$ver": 1,
+  "_$id": "mu6olastlk",
+  "_$type": "Box",
+  "name": "scene_over",
+  "width": 720,
+  "height": 1280,
+  "mouseEnabled": true,
+  "_$comp": [
+    {
+      "_$type": "45f487d1-73ef-46a8-9004-f0f2f2fb0342",
+      "scriptPath": "../src/Over.ts",
+      "backBtn": {
+        "_$ref": "15rekrig"
+      },
+      "endLabel": {
+        "_$ref": "m2cl0ft8"
+      }
+    }
+  ],
+  "_$child": [
+    {
+      "_$id": "6fw4avbo",
+      "_$type": "Sprite",
+      "name": "bg",
+      "width": 720,
+      "height": 1280,
+      "texture": {
+        "_$uuid": "01fa340b-276c-40c7-ae84-46c0c1471e4d",
+        "_$type": "Texture"
+      },
+      "mouseEnabled": true,
+      "_$child": [
+        {
+          "_$id": "15rekrig",
+          "_$type": "Button",
+          "name": "backBtn",
+          "x": 240,
+          "y": 640,
+          "width": 240,
+          "height": 80,
+          "mouseEnabled": true,
+          "centerX": 0,
+          "stateNum": 1,
+          "skin": "res://d4cfd6a8-0d0a-475b-ac93-d85eaa646936",
+          "label": "返回主界面",
+          "labelSize": 20,
+          "labelBold": true,
+          "labelColors": "#000000,#32cc6b,#ff0000,#c0c0c0"
+        },
+        {
+          "_$id": "8polq313",
+          "_$type": "Label",
+          "name": "title",
+          "x": 248,
+          "y": 177,
+          "width": 225,
+          "height": 67,
+          "centerX": 0,
+          "text": "游戏结束\n",
+          "fontSize": 48,
+          "color": "rgba(0, 0, 0, 1)",
+          "bold": true,
+          "align": "center",
+          "leading": 0,
+          "padding": "0,0,0,0"
+        },
+        {
+          "_$id": "m2cl0ft8",
+          "_$type": "Label",
+          "name": "endLabel",
+          "x": 336,
+          "y": 357.5,
+          "width": 379,
+          "height": 59,
+          "anchorX": 0.5,
+          "anchorY": 0.5,
+          "centerX": -24,
+          "text": "",
+          "fontSize": 40,
+          "color": "rgba(0, 0, 0, 1)",
+          "bold": true,
+          "leading": 0,
+          "padding": "0,0,0,0"
+        }
+      ]
+    }
+  ]
+}

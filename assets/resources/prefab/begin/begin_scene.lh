@@ -1,0 +1,130 @@
+{
+  "_$ver": 1,
+  "_$id": "mu6olastlk",
+  "_$type": "Box",
+  "name": "scene_begin",
+  "width": 720,
+  "height": 1280,
+  "mouseEnabled": true,
+  "_$comp": [
+    {
+      "_$type": "679b8a7e-de4e-4a96-956e-f5ef5dc28122",
+      "scriptPath": "../src/Begin.ts",
+      "easyBtn": {
+        "_$ref": "xvqx2bc1"
+      },
+      "diffBtn": {
+        "_$ref": "15rekrig"
+      },
+      "tipsbtn": {
+        "_$ref": "tu6ucuxg"
+      },
+      "coins": {
+        "_$ref": "8polq313"
+      },
+      "tipsBox": null
+    }
+  ],
+  "_$child": [
+    {
+      "_$id": "6fw4avbo",
+      "_$type": "Sprite",
+      "name": "bg",
+      "width": 720,
+      "height": 1280,
+      "texture": {
+        "_$uuid": "01fa340b-276c-40c7-ae84-46c0c1471e4d",
+        "_$type": "Texture"
+      },
+      "mouseEnabled": true,
+      "_$child": [
+        {
+          "_$id": "xvqx2bc1",
+          "_$type": "Button",
+          "name": "easyBtn",
+          "x": 240,
+          "y": 540,
+          "width": 240,
+          "height": 80,
+          "mouseEnabled": true,
+          "top": 540,
+          "centerX": 0,
+          "stateNum": 1,
+          "skin": "res://d4cfd6a8-0d0a-475b-ac93-d85eaa646936",
+          "label": "简单",
+          "labelSize": 40,
+          "labelBold": true,
+          "labelColors": "#000000,#32cc6b,#ff0000,#c0c0c0"
+        },
+        {
+          "_$id": "15rekrig",
+          "_$type": "Button",
+          "name": "diffBtn",
+          "x": 240,
+          "y": 800,
+          "width": 240,
+          "height": 80,
+          "mouseEnabled": true,
+          "top": 800,
+          "centerX": 0,
+          "stateNum": 1,
+          "skin": "res://d4cfd6a8-0d0a-475b-ac93-d85eaa646936",
+          "label": "困难",
+          "labelSize": 40,
+          "labelBold": true,
+          "labelColors": "#000000,#32cc6b,#ff0000,#c0c0c0"
+        },
+        {
+          "_$id": "tu6ucuxg",
+          "_$type": "Button",
+          "name": "tipsBtn",
+          "x": 548,
+          "y": 206,
+          "width": 120,
+          "height": 68,
+          "mouseEnabled": true,
+          "stateNum": 1,
+          "skin": "res://d4cfd6a8-0d0a-475b-ac93-d85eaa646936",
+          "label": "帮助",
+          "labelSize": 32,
+          "labelBold": true,
+          "labelColors": "#000000,#32cc6b,#ff0000,#c0c0c0"
+        },
+        {
+          "_$id": "8polq313",
+          "_$type": "Label",
+          "name": "coins",
+          "x": 76,
+          "y": 216,
+          "width": 240,
+          "height": 56,
+          "right": 404,
+          "top": 216,
+          "text": "金币：0",
+          "fontSize": 32,
+          "color": "rgba(0, 0, 0, 1)",
+          "bold": true,
+          "leading": 0,
+          "padding": "0,0,0,0"
+        },
+        {
+          "_$id": "etk8fr82",
+          "_$type": "Label",
+          "name": "title",
+          "x": 196,
+          "y": 120,
+          "width": 320,
+          "height": 104,
+          "centerX": -4,
+          "text": "连连看",
+          "fontSize": 48,
+          "color": "rgba(0, 0, 0, 1)",
+          "bold": true,
+          "align": "center",
+          "leading": 0,
+          "padding": "0,0,0,0"
+        }
+      ]
+    }
+  ]
+}

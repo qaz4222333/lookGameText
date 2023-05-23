@@ -67,7 +67,7 @@ export class Game extends Laya.Script {
     }
 
     //读取数据表
-    levelJsonLoaded() {
+    levelJsonLoaded(): void {
         let datas = Laya.loader.getRes("json/gameCfg.json").data;
         this.data = this.type == "1" ? datas.level1 : datas.level2;
         this.initFruit();
@@ -103,7 +103,6 @@ export class Game extends Laya.Script {
 
     //获取关卡数据
     gradeData(): void {
-        // console.log("this.data", this.data);
         this.bound = new Laya.Vector2(this.data[this.curGrade].boundX, this.data[this.curGrade].boundY);
         this.gridSize = this.data[this.curGrade].size;
         this.allTime = this.data[this.curGrade].times;
@@ -203,7 +202,6 @@ export class Game extends Laya.Script {
     clickBlockBtn(e: any): void {
         let scr: Fruit = e.target.getComponent(Fruit);
         if (!this.canTouch || this.preIndex == scr.index || this.isMoving) return;
-        console.log(scr.index, scr.tag, this.preIndex)
         scr.setAltha();
         if (this.curTag == scr.tag) {
             let pos1 = this.gridTrans(this.fruitPool[scr.index].x, this.fruitPool[scr.index].y); //当前索q  引图片方格位置
@@ -262,6 +260,7 @@ export class Game extends Laya.Script {
         if (this.matchLine(pos1, pos2)) return true;
         if (this.macthOneLine(pos1, pos2)) return true;
         if (this.macthTwoLine(pos1, pos2)) return true;
+
         return false;
     }
 
@@ -274,6 +273,7 @@ export class Game extends Laya.Script {
         if (pos1[0] == pos2[0]) {
             for (let i = min_y + 1; i <= max_y; i++) {
                 if (i == max_y) {
+                    this.linePath = [];
                     this.linePath.push(pos2, pos1);
                     return true;
                 }
@@ -282,6 +282,7 @@ export class Game extends Laya.Script {
         } else if (pos1[1] == pos2[1]) {
             for (let i = min_x + 1; i <= max_x; i++) {
                 if (i == max_x) {
+                    this.linePath = [];
                     this.linePath.push(pos2, pos1);
                     return true;
                 }
@@ -315,6 +316,7 @@ export class Game extends Laya.Script {
         let y1 = pos1[1];
         let cur_x = x1;
         let cur_y = y1;
+        this.linePath = [];
         // 点pos1上下左右遍历是否有一折消除的情况，就能得出两折消除
         while (true) { //左
             cur_x--;
@@ -445,7 +447,6 @@ export class Game extends Laya.Script {
     //消除的生成线
     createLine(): void {
         let pointLength = this.linePath.length;
-        console.log("pointLength", this.linePath)
         for (let i = 0; i < (pointLength - 1); i++) {
             let line_spr = new Laya.Sprite();
             line_spr.name = "Line_" + i;
@@ -565,7 +566,6 @@ export class Game extends Laya.Script {
             }
 
         }
-        console.log("延迟时间", max_time + 300)
         Laya.timer.once(max_time + 300, this, () => {
             this.isMoving = false;
         })

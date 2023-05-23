@@ -343,12 +343,21 @@
     }
     //判断是否消除
     checkRemSta(pos1, pos2) {
-      if (this.matchLine(pos1, pos2))
+      if (this.matchLine(pos1, pos2)) {
+        console.log("clearPoint", pos1, pos2);
+        console.log("\u76F4\u63A5\u6D88\u9664");
         return true;
-      if (this.macthOneLine(pos1, pos2))
+      }
+      if (this.macthOneLine(pos1, pos2)) {
+        console.log("clearPoint", pos1, pos2);
+        console.log("\u6298\u4E00\u6D88\u9664");
         return true;
-      if (this.macthTwoLine(pos1, pos2))
+      }
+      if (this.macthTwoLine(pos1, pos2)) {
+        console.log("clearPoint", pos1, pos2);
+        console.log("\u6298\u4E8C\u6D88\u9664");
         return true;
+      }
       return false;
     }
     //直接消除
@@ -360,6 +369,7 @@
       if (pos1[0] == pos2[0]) {
         for (let i = min_y + 1; i <= max_y; i++) {
           if (i == max_y) {
+            this.linePath = [];
             this.linePath.push(pos2, pos1);
             return true;
           }
@@ -369,6 +379,7 @@
       } else if (pos1[1] == pos2[1]) {
         for (let i = min_x + 1; i <= max_x; i++) {
           if (i == max_x) {
+            this.linePath = [];
             this.linePath.push(pos2, pos1);
             return true;
           }
@@ -401,6 +412,7 @@
       let y1 = pos1[1];
       let cur_x = x1;
       let cur_y = y1;
+      this.linePath = [];
       while (true) {
         cur_x--;
         if (cur_x < -1)
@@ -655,7 +667,6 @@
           Laya.Tween.to(this.fruitPool[i], { y: posY }, m_y * m_once_time, null);
         }
       }
-      console.log("\u5EF6\u8FDF\u65F6\u95F4", max_time + 300);
       Laya.timer.once(max_time + 300, this, () => {
         this.isMoving = false;
       });

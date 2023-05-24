@@ -15,7 +15,7 @@ export class Main extends Laya.Script {
 
     //进入游戏主界面
     enterGame() {
-        Laya.loader.load("resources/prefab/begin/begin_scene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
+        Laya.loader.load("resources/prefab/begin/BeginScene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
             let beginBox = res.create();
             this.owner.addChild(beginBox);
         })

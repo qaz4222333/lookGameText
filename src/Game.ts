@@ -66,7 +66,9 @@ export class Game extends Laya.Script {
         this.backBtn.on(Laya.Event.CLICK, this, this.onBackBtn);
     }
 
-    //读取数据表
+    /**
+     * 读取数据表
+     */
     levelJsonLoaded(): void {
         let datas = Laya.loader.getRes("json/gameCfg.json").data;
         this.data = this.type == "1" ? datas.level1 : datas.level2;
@@ -74,7 +76,9 @@ export class Game extends Laya.Script {
         this.gameState = true;
     }
 
-    //初始化金币、分数等数据
+    /**
+    * 初始化金币、分数等数据
+    */
     initData(type: string): void {
         this.type = type;
         this.curGrade = 1;
@@ -87,12 +91,14 @@ export class Game extends Laya.Script {
         }
     }
 
-    //初始化关卡水果数量
+    /**
+     * 初始化关卡水果数量
+     */
     initFruit(): void {
         let fruitPool = Laya.Pool.getPoolBySign("fruit");
         this.gradeData();
         let boxNum: number = this.curBoxNum == 0 ? this.data[this.curGrade].boxNum : this.data[this.curGrade].boxNum - this.curBoxNum;
-        Laya.loader.load("resources/prefab/game/game_btn_fruit.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
+        Laya.loader.load("resources/prefab/game/GameFruit.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
             for (let i = 0; i < boxNum; i++) {
                 let fruit = res.create();
                 fruitPool.push(fruit);
@@ -100,8 +106,9 @@ export class Game extends Laya.Script {
             this.createFruit();
         });
     }
-
-    //获取关卡数据
+    /**
+     * 获取关卡数据
+     */
     gradeData(): void {
         this.bound = new Laya.Vector2(this.data[this.curGrade].boundX, this.data[this.curGrade].boundY);
         this.gridSize = this.data[this.curGrade].size;
@@ -114,14 +121,18 @@ export class Game extends Laya.Script {
         this.showProp();
     }
 
-    //变更分数
-    showScore(score: number) {
+    /** 
+    *变更分数
+    */
+    showScore(score: number): void {
         this.curScore += score;
         this.score.text = "当前分数：" + this.curScore;
     }
 
-    //更新道具，标题
-    showProp() {
+    /** 
+    *更新道具，标题
+    */
+    showProp(): void {
         this.coins.text = "当前金币：" + this.localCoin;
         this.score.text = "当前分数：" + this.curScore;
         this.findTimes.text = "次数：" + this.tipsNum.toString();
@@ -129,7 +140,10 @@ export class Game extends Laya.Script {
         this.grade.text = "第" + this.curGrade.toString() + "关";
     }
 
-    //创建关卡水果
+    /**
+     * 创建关卡水果
+     * 先遍历X轴再Y轴
+     */
     createFruit(): void {
         let random = 0;
         let createNum = 0;
@@ -137,7 +151,6 @@ export class Game extends Laya.Script {
         let idx = 0;
         this.fruitGroup.width = this.bound.x * this.gridSize;
         this.fruitGroup.height = this.bound.y * this.gridSize;
-        //先遍历X轴再Y轴
         this.createAllPath();
         for (let j = 0; j < this.bound.y; j++) {
             for (let i = 0; i < this.bound.x; i++) {
@@ -155,7 +168,6 @@ export class Game extends Laya.Script {
         this.randomFruit();
     }
 
-    //创建path
     createAllPath() {
         for (let i = -1; i < this.bound.x + 1; i++) {
             this.allPath[i] = [];
@@ -165,7 +177,9 @@ export class Game extends Laya.Script {
         }
     }
 
-    //打乱顺序
+    /**
+     * 打乱顺序
+     */
     randomFruit(): void {
         let fruitPool = Laya.Pool.getPoolBySign("fruit");
         let poolLen = fruitPool.length;
@@ -192,20 +206,26 @@ export class Game extends Laya.Script {
         }
     }
 
-    //坐标转化方格
+    /**
+    * 坐标转化方格
+    */
     gridTrans(posX: number, posY: number): number[] {
         let path = [posX / this.gridSize, posY / this.gridSize];
         return path;
     }
 
-    //点击按钮，判断是否显示索引底色和消除按钮
+    /**
+     * 点击按钮，判断是否显示索引底色和消除按钮
+     * pos1 当前索引图片方格位置
+     * pos2 之前索引图片方格位置
+     */
     clickBlockBtn(e: any): void {
         let scr: Fruit = e.target.getComponent(Fruit);
         if (!this.canTouch || this.preIndex == scr.index || this.isMoving) return;
         scr.setAltha();
         if (this.curTag == scr.tag) {
-            let pos1 = this.gridTrans(this.fruitPool[scr.index].x, this.fruitPool[scr.index].y); //当前索q  引图片方格位置
-            let pos2 = this.gridTrans(this.fruitPool[this.preIndex].x, this.fruitPool[this.preIndex].y);//之前索引图片方格位置
+            let pos1 = this.gridTrans(this.fruitPool[scr.index].x, this.fruitPool[scr.index].y);
+            let pos2 = this.gridTrans(this.fruitPool[this.preIndex].x, this.fruitPool[this.preIndex].y);
             let state: boolean = this.checkRemSta(pos1, pos2);
             if (state) {
                 this.createLine();
@@ -222,7 +242,12 @@ export class Game extends Laya.Script {
         this.initState(scr.index, scr.tag, true);
     }
 
-    //初始化索引状态和透明度 index当前按钮索引、tag当前按钮标签(图片类型)、type按钮是否消除
+    /**
+     * 初始化索引状态和透明度
+     * index当前按钮索引
+     * tag当前按钮标签(图片类型)
+     * type按钮是否消除
+     */
     initState(index: number = -1, tag: string = "-1", type: boolean = false): void {
         let pre_scr = null;
         if (type) {
@@ -234,13 +259,16 @@ export class Game extends Laya.Script {
         this.checkEnd();
     }
 
-    //检测是否结束
     checkEnd(): void {
         let childLength = this.fruitGroup.numChildren;
         if (childLength == 0) this.gameOver(true);
     }
 
-    //消除功能 idx1 当前索引方格位置，idx2 之前索引方格位置
+    /**
+     * 消除功能
+     * idx1 当前索引方格位置index
+     * idx2 之前索引方格位置index
+     */
     removeFruit(idx1: number = 0, idx2: number = 0): void {
         let pos1 = this.gridTrans(this.fruitPool[idx1].x, this.fruitPool[idx1].y); //当前索引图片方格位置
         let pos2 = this.gridTrans(this.fruitPool[idx2].x, this.fruitPool[idx2].y);//之前索引图片方格位置
@@ -248,23 +276,24 @@ export class Game extends Laya.Script {
         this.fruitGroup.removeChild(this.fruitPool[idx2]);
         this.fruitPool[idx1] = 0;
         this.fruitPool[idx2] = 0;
-        //存储坐标消除
         this.allPath[pos1[1]][pos1[0]] = 0;
         this.allPath[pos2[1]][pos2[0]] = 0;
         this.showScore(this.addScore);
     }
 
-    //判断是否消除
+    /**
+     * 判断是否消除
+     * matchLine直接消除
+     * macthOneLine折一消除
+     * macthTwoLine折二消除
+     */
     checkRemSta(pos1: number[], pos2: number[]): boolean {
-        //判断消除类型
         if (this.matchLine(pos1, pos2)) return true;
         if (this.macthOneLine(pos1, pos2)) return true;
         if (this.macthTwoLine(pos1, pos2)) return true;
-
         return false;
     }
 
-    //直接消除
     matchLine(pos1: number[], pos2: number[]): boolean {
         let min_x = pos1[0] > pos2[0] ? pos2[0] : pos1[0];
         let max_x = pos1[0] < pos2[0] ? pos2[0] : pos1[0];
@@ -291,7 +320,6 @@ export class Game extends Laya.Script {
         }
     }
 
-    //折一线消除
     macthOneLine(pos1: number[], pos2: number[]): boolean {
         let x1 = pos1[0];
         let x2 = pos2[0];
@@ -310,49 +338,48 @@ export class Game extends Laya.Script {
         return false;
     }
 
-    //折两线消除
     macthTwoLine(pos1: number[], pos2: number[]): boolean {
         let x1 = pos1[0];
         let y1 = pos1[1];
-        let cur_x = x1;
-        let cur_y = y1;
+        let cur_x = 0;
+        let cur_y = -1;
         this.linePath = [];
         // 点pos1上下左右遍历是否有一折消除的情况，就能得出两折消除
         while (true) { //左
             cur_x--;
             if (cur_x < -1) break;
             if (this.allPath[y1][cur_x] != 0) break;
-            if (this.macthOneLine([cur_x, y1], pos2)) {
+            if (this.matchLine([x1, y1], [cur_x, y1]) && this.macthOneLine([cur_x, y1], pos2)) {
                 this.linePath.push([x1, y1]);
                 return true;
             }
         }
-        cur_x = x1
+        cur_x = x1;
         while (true) {//右
             cur_x++;
             if (cur_x >= this.bound.x + 1) break;
             if (this.allPath[y1][cur_x] != 0) break;
-            if (this.macthOneLine([cur_x, y1], pos2)) {
+            if (this.matchLine([x1, y1], [cur_x, y1]) && this.macthOneLine([cur_x, y1], pos2)) {
                 this.linePath.push([x1, y1]);
                 return true;
             }
         }
-        cur_y = y1
+        cur_y = y1;
         while (true) {//下
             cur_y++;
             if (cur_y >= this.bound.y + 1) break;
             if (this.allPath[cur_y][x1] != 0) break;
-            if (this.macthOneLine([x1, cur_y], pos2)) {
+            if (this.matchLine([x1, y1], [x1, cur_y]) && this.macthOneLine([x1, cur_y], pos2)) {
                 this.linePath.push([x1, y1]);
                 return true;
             }
         }
-        cur_y = y1
+        cur_y = y1;
         while (true) {//上
             cur_y--;
             if (cur_y < -1) break;
             if (this.allPath[cur_y][x1] != 0) break;
-            if (this.macthOneLine([x1, cur_y], pos2)) {
+            if (this.matchLine([x1, y1], [x1, cur_y]) && this.macthOneLine([x1, cur_y], pos2)) {
                 this.linePath.push([x1, y1]);
                 return true;
             }
@@ -360,11 +387,13 @@ export class Game extends Laya.Script {
         return false;
     }
 
-    //关卡变更，新增水果
+    /**
+     * 关卡变更，新增水果
+     */
     addFruit(): void {
         let fruitPool = Laya.Pool.getPoolBySign("fruit");
         if (fruitPool.length == 0) {
-            Laya.loader.load("resources/prefab/game/game_btn_fruit.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
+            Laya.loader.load("resources/prefab/game/GameFruit.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
                 let fruit = res.create();
                 fruitPool.push(fruit);
             })
@@ -373,7 +402,9 @@ export class Game extends Laya.Script {
         }
     }
 
-    //寻找道具
+    /**
+     * 寻找道具
+     */
     onFindBtn(): void {
         if (!this.canTouch || this.isMoving || this.tipsNum <= 0) return;
         let childLength = this.fruitGroup.numChildren;
@@ -390,61 +421,69 @@ export class Game extends Laya.Script {
                 let pos1 = this.gridTrans(fruitBox1.x, fruitBox1.y); //当前索引图片方格位置
                 let pos2 = this.gridTrans(fruitBox2.x, fruitBox2.y);//之前索引图片方格位置
                 if (tag1 == tag2) state = this.checkRemSta(pos1, pos2);
-                if (state) {
-                    this.tipsNum--;
-                    this.createLine();
-                    this.canTouch = false;
-                    Laya.timer.once(400, this, () => {
-                        this.canTouch = true;
-                        this.removeFruit(idx1, idx2);
-                        this.removeLine(this.linePath.length - 1);
-                        this.initState();
-                    });
-                    (this.findBtn.getChildAt(0) as Laya.Label).text = "次数：" + this.tipsNum.toString();
-                    return;
-                }
+                if (state) this.findRemove(idx1, idx2);
             }
         }
     }
 
-    //炸弹道具
+    /**
+     * 寻找道具删除
+     */
+    findRemove(idx1: number, idx2: number): void {
+        this.tipsNum--;
+        this.createLine();
+        this.canTouch = false;
+        Laya.timer.once(400, this, () => {
+            this.canTouch = true;
+            this.removeFruit(idx1, idx2);
+            this.removeLine(this.linePath.length - 1);
+            this.initState();
+        });
+        (this.findBtn.getChildAt(0) as Laya.Label).text = "次数：" + this.tipsNum.toString();
+        return;
+    }
+
+    /**
+     * 炸弹道具
+     */
     onBoomBtn(): void {
-        if (!this.canTouch || this.isMoving) return;
+        if (!this.canTouch || this.isMoving || this.preIndex == -1) return;
         if (this.localCoin >= this.boomCoins) {
-            let scr = null;
-            let isUse = false;
             for (let i = 0; i < this.fruitPool.length; i++) {
                 if (this.fruitPool[i]) {
-                    scr = this.fruitPool[i].getComponent(Fruit);
+                    let scr = this.fruitPool[i].getComponent(Fruit);
                     if (scr.tag == this.curTag) {
                         this.fruitGroup.removeChild(this.fruitPool[i]);
                         let path = this.gridTrans(this.fruitPool[i].x, this.fruitPool[i].y);
                         this.allPath[path[1]][path[0]] = 0;
                         this.fruitPool[i] = 0;
-                        isUse = true;
                     }
                 }
             }
-            if (isUse) {
-                this.localCoin -= this.boomCoins;
-                this.coins.text = "当前金币：" + this.localCoin.toString();
-                Laya.LocalStorage.setItem("weiqing", this.localCoin.toString());
-            }
+            this.updateCoin();
         }
         if (this.type == "2") this.moveBlock();
         this.initState();
     }
 
+    updateCoin() {
+        this.localCoin -= this.boomCoins;
+        this.coins.text = "当前金币：" + this.localCoin.toString();
+        Laya.LocalStorage.setItem("weiqing", this.localCoin.toString());
+    }
+
     //返回按钮
     onBackBtn(): void {
-        Laya.loader.load("resources/prefab/begin/begin_scene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
+        Laya.loader.load("resources/prefab/begin/BeginScene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
             let test = res.create();
             this.owner.parent.addChild(test);
             this.owner.destroy();
         })
     }
 
-    //消除的生成线
+    /**
+     * 消除的生成线
+     */
     createLine(): void {
         let pointLength = this.linePath.length;
         for (let i = 0; i < (pointLength - 1); i++) {
@@ -472,7 +511,9 @@ export class Game extends Laya.Script {
         }
     }
 
-    //移除线
+    /**
+     * 移除线
+     */
     removeLine(type: number): void {
         this.linePath = [];
         for (let i = 0; i < type; i++) {
@@ -482,38 +523,32 @@ export class Game extends Laya.Script {
         if (this.type == "2") this.moveBlock();
     }
 
-    //游戏结束 type:通关、失败
+    /**
+     * 游戏结束 
+     * type:通关、失败
+     */
     gameOver(type: boolean): void {
-        if (type) {
-            if (this.curGrade < this.maxGrade) {
-                this.curGrade++;
-                this.onDestroy();
-                this.initFruit();
-                this.gameState = true;
-            } else {
-                let endScore = Math.floor(this.curScore * (this.curTime / this.allTime));
-                this.gameState = false;
-                Laya.loader.load("resources/prefab/over/over_scene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
-                    let overBox = res.create();
-                    let owner: Laya.Sprite | Laya.Sprite3D = this.owner;
-                    owner.parent.addChild(overBox);
-                    overBox.getComponent(Over).showEndUI(endScore, type);
-                    this.owner.destroy();
-                })
-            }
+        if (type && this.curGrade < this.maxGrade) {
+            this.curGrade++;
+            this.onDestroy();
+            this.initFruit();
+            this.gameState = true;
         } else {
+            let endScore = type ? Math.floor(this.curScore * (this.curTime / this.allTime)) : 0;
             this.gameState = false;
-            Laya.loader.load("resources/prefab/over/over_scene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
+            Laya.loader.load("resources/prefab/over/OverScene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
                 let overBox = res.create();
                 let owner: Laya.Sprite | Laya.Sprite3D = this.owner;
                 owner.parent.addChild(overBox);
-                overBox.getComponent(Over).showEndUI();
+                overBox.getComponent(Over).showEndUI(endScore, type);
                 this.owner.destroy();
             })
         }
     }
 
-    //时间转化
+    /**
+     * 时间转化
+     */
     showTime(): void {
         let minute: string | number = Math.floor(this.curTime / 3600);
         let second: string | number = Math.floor(this.curTime / 60 % 60);
@@ -538,14 +573,14 @@ export class Game extends Laya.Script {
         Laya.Pool.clearBySign("fruit");
     }
 
-    //向下移动
+    /**
+     * 向下移动
+     */
     moveBlock(): void {
         this.isMoving = true;
         let m_once_time = 500;
         let max_time = 0;
         let length = this.fruitPool.length;
-        let prePath: number[] = [];
-        let curPath: number[] = [];
         for (let i = (length - 1); i >= 0; i--) {
             let m_y = 0;
             if (!this.fruitPool[i]) continue;
@@ -557,14 +592,13 @@ export class Game extends Laya.Script {
             }
             if (m_y > 0) {
                 let posY = this.fruitPool[i].y + (m_y * this.gridSize);
-                prePath = pos;
-                curPath = this.gridTrans(this.fruitPool[i].x, posY);
+                let prePath = pos;
+                let curPath = this.gridTrans(this.fruitPool[i].x, posY);
                 this.allPath[prePath[1]][prePath[0]] = 0;
                 this.allPath[curPath[1]][curPath[0]] = 1;
                 max_time = m_y * m_once_time;
                 Laya.Tween.to(this.fruitPool[i], { y: posY }, m_y * m_once_time, null);
             }
-
         }
         Laya.timer.once(max_time + 300, this, () => {
             this.isMoving = false;

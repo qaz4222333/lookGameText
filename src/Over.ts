@@ -50,7 +50,7 @@ export class Over extends Laya.Script {
 
     //返回主界面
     backBegin() {
-        Laya.loader.load("resources/prefab/begin/begin_scene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
+        Laya.loader.load("resources/prefab/begin/BeginScene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
             let beginBox = res.create();
             let owner: Laya.Sprite | Laya.Sprite3D = this.owner;
             owner.parent.addChild(beginBox);

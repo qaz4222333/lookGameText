@@ -53,7 +53,7 @@
     },
     "level2": {
         "1": {
-            "times": 7200,
+            "times": 300,
             "addscore": 15,
             "boxNum": 64,
             "boundX": 8,
@@ -80,7 +80,7 @@
             "boundY": 12,
             "size": 60,
             "boom": 300,
-            "randomNum": 12
+            "randomNum": 1
         }
     }
 }

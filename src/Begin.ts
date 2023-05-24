@@ -49,7 +49,7 @@ export class Begin extends Laya.Script {
 
     //创建游戏界面舞台
     createTable(type: string): void {
-        Laya.loader.load("resources/prefab/game/game_scene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
+        Laya.loader.load("resources/prefab/game/GameScene.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
             let gameBox = res.create();
             let owner: Laya.Sprite | Laya.Sprite3D = this.owner;
             owner.parent.addChild(gameBox);
@@ -59,7 +59,7 @@ export class Begin extends Laya.Script {
     }
 
     onTipsbtn() {
-        Laya.loader.load("resources/prefab/begin/tips_prefab.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
+        Laya.loader.load("resources/prefab/begin/TipPrefab.lh", Laya.PrefabImpl, null).then((res: Laya.PrefabImpl) => {
             let tipsBox = res.create();
             this.owner.addChild(tipsBox);
             (tipsBox as Laya.Button).on(Laya.Event.CLICK, this, () => {

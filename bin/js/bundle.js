@@ -88,7 +88,7 @@
     }
     //返回主界面
     backBegin() {
-      Laya.loader.load("resources/prefab/begin/begin_scene.lh", Laya.PrefabImpl, null).then((res) => {
+      Laya.loader.load("resources/prefab/begin/BeginScene.lh", Laya.PrefabImpl, null).then((res) => {
         let beginBox = res.create();
         let owner = this.owner;
         owner.parent.addChild(beginBox);
@@ -163,14 +163,18 @@
       this.boomBtn.on(Laya.Event.CLICK, this, this.onBoomBtn);
       this.backBtn.on(Laya.Event.CLICK, this, this.onBackBtn);
     }
-    //读取数据表
+    /**
+     * 读取数据表
+     */
     levelJsonLoaded() {
       let datas = Laya.loader.getRes("json/gameCfg.json").data;
       this.data = this.type == "1" ? datas.level1 : datas.level2;
       this.initFruit();
       this.gameState = true;
     }
-    //初始化金币、分数等数据
+    /**
+    * 初始化金币、分数等数据
+    */
     initData(type) {
       this.type = type;
       this.curGrade = 1;
@@ -182,12 +186,14 @@
         this.localCoin = Number(localCoin);
       }
     }
-    //初始化关卡水果数量
+    /**
+     * 初始化关卡水果数量
+     */
     initFruit() {
       let fruitPool = Laya.Pool.getPoolBySign("fruit");
       this.gradeData();
       let boxNum = this.curBoxNum == 0 ? this.data[this.curGrade].boxNum : this.data[this.curGrade].boxNum - this.curBoxNum;
-      Laya.loader.load("resources/prefab/game/game_btn_fruit.lh", Laya.PrefabImpl, null).then((res) => {
+      Laya.loader.load("resources/prefab/game/GameFruit.lh", Laya.PrefabImpl, null).then((res) => {
         for (let i = 0; i < boxNum; i++) {
           let fruit = res.create();
           fruitPool.push(fruit);
@@ -195,7 +201,9 @@
         this.createFruit();
       });
     }
-    //获取关卡数据
+    /**
+     * 获取关卡数据
+     */
     gradeData() {
       this.bound = new Laya.Vector2(this.data[this.curGrade].boundX, this.data[this.curGrade].boundY);
       this.gridSize = this.data[this.curGrade].size;
@@ -207,12 +215,16 @@
       this.curTime = this.allTime;
       this.showProp();
     }
-    //变更分数
+    /** 
+    *变更分数
+    */
     showScore(score) {
       this.curScore += score;
       this.score.text = "\u5F53\u524D\u5206\u6570\uFF1A" + this.curScore;
     }
-    //更新道具，标题
+    /** 
+    *更新道具，标题
+    */
     showProp() {
       this.coins.text = "\u5F53\u524D\u91D1\u5E01\uFF1A" + this.localCoin;
       this.score.text = "\u5F53\u524D\u5206\u6570\uFF1A" + this.curScore;
@@ -220,7 +232,10 @@
       this.boomCum.text = "\u91D1\u5E01:" + this.boomCoins.toString();
       this.grade.text = "\u7B2C" + this.curGrade.toString() + "\u5173";
     }
-    //创建关卡水果
+    /**
+     * 创建关卡水果
+     * 先遍历X轴再Y轴
+     */
     createFruit() {
       let random = 0;
       let createNum = 0;
@@ -246,7 +261,6 @@
       }
       this.randomFruit();
     }
-    //创建path
     createAllPath() {
       for (let i = -1; i < this.bound.x + 1; i++) {
         this.allPath[i] = [];
@@ -255,7 +269,9 @@
         }
       }
     }
-    //打乱顺序
+    /**
+     * 打乱顺序
+     */
     randomFruit() {
       let fruitPool = Laya.Pool.getPoolBySign("fruit");
       let poolLen = fruitPool.length;
@@ -280,17 +296,22 @@
         this.fruitGroup.addChild(btn);
       }
     }
-    //坐标转化方格
+    /**
+    * 坐标转化方格
+    */
     gridTrans(posX, posY) {
       let path = [posX / this.gridSize, posY / this.gridSize];
       return path;
     }
-    //点击按钮，判断是否显示索引底色和消除按钮
+    /**
+     * 点击按钮，判断是否显示索引底色和消除按钮
+     * pos1 当前索引图片方格位置
+     * pos2 之前索引图片方格位置
+     */
     clickBlockBtn(e) {
       let scr = e.target.getComponent(Fruit);
       if (!this.canTouch || this.preIndex == scr.index || this.isMoving)
         return;
-      console.log(scr.index, scr.tag, this.preIndex);
       scr.setAltha();
       if (this.curTag == scr.tag) {
         let pos1 = this.gridTrans(this.fruitPool[scr.index].x, this.fruitPool[scr.index].y);
@@ -310,7 +331,12 @@
       }
       this.initState(scr.index, scr.tag, true);
     }
-    //初始化索引状态和透明度 index当前按钮索引、tag当前按钮标签(图片类型)、type按钮是否消除
+    /**
+     * 初始化索引状态和透明度
+     * index当前按钮索引
+     * tag当前按钮标签(图片类型)
+     * type按钮是否消除
+     */
     initState(index = -1, tag = "-1", type = false) {
       let pre_scr = null;
       if (type) {
@@ -323,13 +349,16 @@
       this.curTag = tag;
       this.checkEnd();
     }
-    //检测是否结束
     checkEnd() {
       let childLength = this.fruitGroup.numChildren;
       if (childLength == 0)
         this.gameOver(true);
     }
-    //消除功能 idx1 当前索引方格位置，idx2 之前索引方格位置
+    /**
+     * 消除功能
+     * idx1 当前索引方格位置index
+     * idx2 之前索引方格位置index
+     */
     removeFruit(idx1 = 0, idx2 = 0) {
       let pos1 = this.gridTrans(this.fruitPool[idx1].x, this.fruitPool[idx1].y);
       let pos2 = this.gridTrans(this.fruitPool[idx2].x, this.fruitPool[idx2].y);
@@ -341,26 +370,21 @@
       this.allPath[pos2[1]][pos2[0]] = 0;
       this.showScore(this.addScore);
     }
-    //判断是否消除
+    /**
+     * 判断是否消除
+     * matchLine直接消除
+     * macthOneLine折一消除
+     * macthTwoLine折二消除
+     */
     checkRemSta(pos1, pos2) {
-      if (this.matchLine(pos1, pos2)) {
-        console.log("clearPoint", pos1, pos2);
-        console.log("\u76F4\u63A5\u6D88\u9664");
+      if (this.matchLine(pos1, pos2))
         return true;
-      }
-      if (this.macthOneLine(pos1, pos2)) {
-        console.log("clearPoint", pos1, pos2);
-        console.log("\u6298\u4E00\u6D88\u9664");
+      if (this.macthOneLine(pos1, pos2))
         return true;
-      }
-      if (this.macthTwoLine(pos1, pos2)) {
-        console.log("clearPoint", pos1, pos2);
-        console.log("\u6298\u4E8C\u6D88\u9664");
+      if (this.macthTwoLine(pos1, pos2))
         return true;
-      }
       return false;
     }
-    //直接消除
     matchLine(pos1, pos2) {
       let min_x = pos1[0] > pos2[0] ? pos2[0] : pos1[0];
       let max_x = pos1[0] < pos2[0] ? pos2[0] : pos1[0];
@@ -388,7 +412,6 @@
         }
       }
     }
-    //折一线消除
     macthOneLine(pos1, pos2) {
       let x1 = pos1[0];
       let x2 = pos2[0];
@@ -406,12 +429,11 @@
       }
       return false;
     }
-    //折两线消除
     macthTwoLine(pos1, pos2) {
       let x1 = pos1[0];
       let y1 = pos1[1];
-      let cur_x = x1;
-      let cur_y = y1;
+      let cur_x = 0;
+      let cur_y = -1;
       this.linePath = [];
       while (true) {
         cur_x--;
@@ -419,7 +441,7 @@
           break;
         if (this.allPath[y1][cur_x] != 0)
           break;
-        if (this.macthOneLine([cur_x, y1], pos2)) {
+        if (this.matchLine([x1, y1], [cur_x, y1]) && this.macthOneLine([cur_x, y1], pos2)) {
           this.linePath.push([x1, y1]);
           return true;
         }
@@ -431,7 +453,7 @@
           break;
         if (this.allPath[y1][cur_x] != 0)
           break;
-        if (this.macthOneLine([cur_x, y1], pos2)) {
+        if (this.matchLine([x1, y1], [cur_x, y1]) && this.macthOneLine([cur_x, y1], pos2)) {
           this.linePath.push([x1, y1]);
           return true;
         }
@@ -443,7 +465,7 @@
           break;
         if (this.allPath[cur_y][x1] != 0)
           break;
-        if (this.macthOneLine([x1, cur_y], pos2)) {
+        if (this.matchLine([x1, y1], [x1, cur_y]) && this.macthOneLine([x1, cur_y], pos2)) {
           this.linePath.push([x1, y1]);
           return true;
         }
@@ -455,18 +477,20 @@
           break;
         if (this.allPath[cur_y][x1] != 0)
           break;
-        if (this.macthOneLine([x1, cur_y], pos2)) {
+        if (this.matchLine([x1, y1], [x1, cur_y]) && this.macthOneLine([x1, cur_y], pos2)) {
           this.linePath.push([x1, y1]);
           return true;
         }
       }
       return false;
     }
-    //关卡变更，新增水果
+    /**
+     * 关卡变更，新增水果
+     */
     addFruit() {
       let fruitPool = Laya.Pool.getPoolBySign("fruit");
       if (fruitPool.length == 0) {
-        Laya.loader.load("resources/prefab/game/game_btn_fruit.lh", Laya.PrefabImpl, null).then((res) => {
+        Laya.loader.load("resources/prefab/game/GameFruit.lh", Laya.PrefabImpl, null).then((res) => {
           let fruit = res.create();
           fruitPool.push(fruit);
         });
@@ -474,7 +498,9 @@
         this.fruitGroup.addChild(fruitPool[0]);
       }
     }
-    //寻找道具
+    /**
+     * 寻找道具
+     */
     onFindBtn() {
       if (!this.canTouch || this.isMoving || this.tipsNum <= 0)
         return;
@@ -494,63 +520,69 @@
           let pos2 = this.gridTrans(fruitBox2.x, fruitBox2.y);
           if (tag1 == tag2)
             state = this.checkRemSta(pos1, pos2);
-          if (state) {
-            this.tipsNum--;
-            this.createLine();
-            this.canTouch = false;
-            Laya.timer.once(400, this, () => {
-              this.canTouch = true;
-              this.removeFruit(idx1, idx2);
-              this.removeLine(this.linePath.length - 1);
-              this.initState();
-            });
-            this.findBtn.getChildAt(0).text = "\u6B21\u6570\uFF1A" + this.tipsNum.toString();
-            return;
-          }
+          if (state)
+            this.findRemove(idx1, idx2);
         }
       }
     }
-    //炸弹道具
+    /**
+     * 寻找道具删除
+     */
+    findRemove(idx1, idx2) {
+      this.tipsNum--;
+      this.createLine();
+      this.canTouch = false;
+      Laya.timer.once(400, this, () => {
+        this.canTouch = true;
+        this.removeFruit(idx1, idx2);
+        this.removeLine(this.linePath.length - 1);
+        this.initState();
+      });
+      this.findBtn.getChildAt(0).text = "\u6B21\u6570\uFF1A" + this.tipsNum.toString();
+      return;
+    }
+    /**
+     * 炸弹道具
+     */
     onBoomBtn() {
-      if (!this.canTouch || this.isMoving)
+      if (!this.canTouch || this.isMoving || this.preIndex == -1)
         return;
       if (this.localCoin >= this.boomCoins) {
-        let scr = null;
-        let isUse = false;
         for (let i = 0; i < this.fruitPool.length; i++) {
           if (this.fruitPool[i]) {
-            scr = this.fruitPool[i].getComponent(Fruit);
+            let scr = this.fruitPool[i].getComponent(Fruit);
             if (scr.tag == this.curTag) {
               this.fruitGroup.removeChild(this.fruitPool[i]);
               let path = this.gridTrans(this.fruitPool[i].x, this.fruitPool[i].y);
               this.allPath[path[1]][path[0]] = 0;
               this.fruitPool[i] = 0;
-              isUse = true;
             }
           }
         }
-        if (isUse) {
-          this.localCoin -= this.boomCoins;
-          this.coins.text = "\u5F53\u524D\u91D1\u5E01\uFF1A" + this.localCoin.toString();
-          Laya.LocalStorage.setItem("weiqing", this.localCoin.toString());
-        }
+        this.updateCoin();
       }
       if (this.type == "2")
         this.moveBlock();
       this.initState();
     }
+    updateCoin() {
+      this.localCoin -= this.boomCoins;
+      this.coins.text = "\u5F53\u524D\u91D1\u5E01\uFF1A" + this.localCoin.toString();
+      Laya.LocalStorage.setItem("weiqing", this.localCoin.toString());
+    }
     //返回按钮
     onBackBtn() {
-      Laya.loader.load("resources/prefab/begin/begin_scene.lh", Laya.PrefabImpl, null).then((res) => {
+      Laya.loader.load("resources/prefab/begin/BeginScene.lh", Laya.PrefabImpl, null).then((res) => {
         let test = res.create();
         this.owner.parent.addChild(test);
         this.owner.destroy();
       });
     }
-    //消除的生成线
+    /**
+     * 消除的生成线
+     */
     createLine() {
       let pointLength = this.linePath.length;
-      console.log("pointLength", this.linePath);
       for (let i = 0; i < pointLength - 1; i++) {
         let line_spr = new Laya.Sprite();
         line_spr.name = "Line_" + i;
@@ -575,7 +607,9 @@
         this.fruitGroup.addChild(line_spr);
       }
     }
-    //移除线
+    /**
+     * 移除线
+     */
     removeLine(type) {
       this.linePath = [];
       for (let i = 0; i < type; i++) {
@@ -585,37 +619,31 @@
       if (this.type == "2")
         this.moveBlock();
     }
-    //游戏结束 type:通关、失败
+    /**
+     * 游戏结束 
+     * type:通关、失败
+     */
     gameOver(type) {
-      if (type) {
-        if (this.curGrade < this.maxGrade) {
-          this.curGrade++;
-          this.onDestroy();
-          this.initFruit();
-          this.gameState = true;
-        } else {
-          let endScore = Math.floor(this.curScore * (this.curTime / this.allTime));
-          this.gameState = false;
-          Laya.loader.load("resources/prefab/over/over_scene.lh", Laya.PrefabImpl, null).then((res) => {
-            let overBox = res.create();
-            let owner = this.owner;
-            owner.parent.addChild(overBox);
-            overBox.getComponent(Over).showEndUI(endScore, type);
-            this.owner.destroy();
-          });
-        }
+      if (type && this.curGrade < this.maxGrade) {
+        this.curGrade++;
+        this.onDestroy();
+        this.initFruit();
+        this.gameState = true;
       } else {
+        let endScore = type ? Math.floor(this.curScore * (this.curTime / this.allTime)) : 0;
         this.gameState = false;
-        Laya.loader.load("resources/prefab/over/over_scene.lh", Laya.PrefabImpl, null).then((res) => {
+        Laya.loader.load("resources/prefab/over/OverScene.lh", Laya.PrefabImpl, null).then((res) => {
           let overBox = res.create();
           let owner = this.owner;
           owner.parent.addChild(overBox);
-          overBox.getComponent(Over).showEndUI();
+          overBox.getComponent(Over).showEndUI(endScore, type);
           this.owner.destroy();
         });
       }
     }
-    //时间转化
+    /**
+     * 时间转化
+     */
     showTime() {
       let minute = Math.floor(this.curTime / 3600);
       let second = Math.floor(this.curTime / 60 % 60);
@@ -638,14 +666,14 @@
       this.fruitGroup.removeChildren(0, childLength - 1);
       Laya.Pool.clearBySign("fruit");
     }
-    //向下移动
+    /**
+     * 向下移动
+     */
     moveBlock() {
       this.isMoving = true;
       let m_once_time = 500;
       let max_time = 0;
       let length = this.fruitPool.length;
-      let prePath = [];
-      let curPath = [];
       for (let i = length - 1; i >= 0; i--) {
         let m_y = 0;
         if (!this.fruitPool[i])
@@ -659,8 +687,8 @@
         }
         if (m_y > 0) {
           let posY = this.fruitPool[i].y + m_y * this.gridSize;
-          prePath = pos;
-          curPath = this.gridTrans(this.fruitPool[i].x, posY);
+          let prePath = pos;
+          let curPath = this.gridTrans(this.fruitPool[i].x, posY);
           this.allPath[prePath[1]][prePath[0]] = 0;
           this.allPath[curPath[1]][curPath[0]] = 1;
           max_time = m_y * m_once_time;
@@ -737,7 +765,7 @@
     }
     //创建游戏界面舞台
     createTable(type) {
-      Laya.loader.load("resources/prefab/game/game_scene.lh", Laya.PrefabImpl, null).then((res) => {
+      Laya.loader.load("resources/prefab/game/GameScene.lh", Laya.PrefabImpl, null).then((res) => {
         let gameBox = res.create();
         let owner = this.owner;
         owner.parent.addChild(gameBox);
@@ -746,7 +774,7 @@
       });
     }
     onTipsbtn() {
-      Laya.loader.load("resources/prefab/begin/tips_prefab.lh", Laya.PrefabImpl, null).then((res) => {
+      Laya.loader.load("resources/prefab/begin/TipPrefab.lh", Laya.PrefabImpl, null).then((res) => {
         let tipsBox = res.create();
         this.owner.addChild(tipsBox);
         tipsBox.on(Laya.Event.CLICK, this, () => {
@@ -786,7 +814,7 @@
     }
     //进入游戏主界面
     enterGame() {
-      Laya.loader.load("resources/prefab/begin/begin_scene.lh", Laya.PrefabImpl, null).then((res) => {
+      Laya.loader.load("resources/prefab/begin/BeginScene.lh", Laya.PrefabImpl, null).then((res) => {
         let beginBox = res.create();
         this.owner.addChild(beginBox);
       });
